@@ -4,16 +4,12 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>iPhone Store — интернет-магазин</title>
+  <meta name="description" content="Демо интернет-магазина iPhone: каталог, поиск, сортировка и корзина." />
+
   <style>
     :root{
-      --bg:#0b0f16;
-      --card:#111827;
-      --muted:#94a3b8;
-      --text:#e5e7eb;
-      --accent:#22c55e;
-      --danger:#ef4444;
-      --border:rgba(255,255,255,.08);
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --bg:#0b0f16; --card:#111827; --muted:#94a3b8; --text:#e5e7eb;
+      --accent:#22c55e; --border:rgba(255,255,255,.08); --shadow:0 10px 30px rgba(0,0,0,.35);
       --radius:16px;
     }
     *{box-sizing:border-box}
@@ -25,46 +21,41 @@
                   var(--bg);
       color:var(--text);
     }
-    a{color:inherit}
     .container{max-width:1100px; margin:0 auto; padding:20px}
     header{
-      position: sticky; top:0; z-index:10;
+      position:sticky; top:0; z-index:10;
       backdrop-filter: blur(12px);
       background: rgba(11,15,22,.65);
-      border-bottom: 1px solid var(--border);
+      border-bottom:1px solid var(--border);
     }
     .topbar{
       display:flex; gap:12px; align-items:center; justify-content:space-between;
-      padding:14px 20px;
-      max-width:1100px; margin:0 auto;
+      padding:14px 20px; max-width:1100px; margin:0 auto;
     }
-    .brand{
-      display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.2px;
-    }
+    .brand{display:flex; align-items:center; gap:10px; font-weight:800}
     .logo{
       width:38px; height:38px; border-radius:12px;
       background: linear-gradient(135deg, rgba(34,197,94,.9), rgba(59,130,246,.9));
       box-shadow: var(--shadow);
     }
-    .controls{
-      display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end;
-    }
+    .small{font-size:12px; color:var(--muted)}
+    .controls{display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end}
     .input, select{
       background: rgba(255,255,255,.04);
-      border: 1px solid var(--border);
-      color: var(--text);
+      border:1px solid var(--border);
+      color:var(--text);
       padding:10px 12px;
-      border-radius: 12px;
-      outline: none;
-      min-width: 220px;
+      border-radius:12px;
+      outline:none;
+      min-width:220px;
     }
-    select{min-width: 210px}
+    select{min-width:210px}
     .btn{
-      border: 1px solid var(--border);
+      border:1px solid var(--border);
       background: rgba(255,255,255,.06);
-      color: var(--text);
+      color:var(--text);
       padding:10px 12px;
-      border-radius: 12px;
+      border-radius:12px;
       cursor:pointer;
       transition:.15s transform, .15s background;
       display:inline-flex; align-items:center; gap:8px;
@@ -82,12 +73,11 @@
       padding:2px 8px;
       border-radius:999px;
       font-size:12px;
-      color: var(--text);
     }
 
     main{padding:22px 0 60px}
     .hero{
-      padding: 22px 20px;
+      padding:22px 20px;
       border:1px solid var(--border);
       border-radius: var(--radius);
       background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
@@ -95,6 +85,7 @@
     }
     .hero h1{margin:0 0 6px; font-size:26px}
     .hero p{margin:0; color:var(--muted)}
+
     .grid{
       margin-top:18px;
       display:grid;
@@ -117,21 +108,8 @@
         linear-gradient(135deg, rgba(59,130,246,.25), rgba(34,197,94,.22)),
         rgba(255,255,255,.04);
       border-bottom:1px solid var(--border);
-      display:flex; align-items:center; justify-content:center;
+      display:flex; align-items:flex-end; justify-content:flex-start;
       padding:12px;
-      position:relative;
-      font-size:64px;
-      transition:transform .2s;
-    }
-    .card:hover .img{
-      transform:scale(1.05);
-    }
-    .card{
-      transition:transform .2s, box-shadow .2s;
-    }
-    .card:hover{
-      transform:translateY(-4px);
-      box-shadow:0 12px 32px rgba(0,0,0,.35);
     }
     .tag{
       font-size:12px;
@@ -139,34 +117,30 @@
       border-radius:999px;
       background: rgba(0,0,0,.25);
       border:1px solid var(--border);
-      color: var(--text);
     }
     .content{padding:14px 14px 12px; display:flex; flex-direction:column; gap:10px; flex:1}
     .title{font-weight:800; font-size:16px; line-height:1.25}
     .muted{color:var(--muted); font-size:13px; line-height:1.35}
     .row{display:flex; align-items:center; justify-content:space-between; gap:10px}
     .price{font-weight:900; font-size:18px}
-    .small{font-size:12px; color:var(--muted)}
     .actions{display:flex; gap:10px; margin-top:auto}
-    .btn.icon{min-width:44px; justify-content:center}
 
     footer{
-      border-top: 1px solid var(--border);
-      color: var(--muted);
-      padding: 18px 0 30px;
-      font-size: 13px;
+      border-top:1px solid var(--border);
+      color:var(--muted);
+      padding:18px 0 30px;
+      font-size:13px;
     }
 
     /* Modal */
     .overlay{
       position:fixed; inset:0; background: rgba(0,0,0,.55);
-      display:none; align-items:center; justify-content:center;
-      padding:20px;
+      display:none; align-items:center; justify-content:center; padding:20px;
     }
     .overlay.open{display:flex}
     .modal{
       width:min(760px, 100%);
-      border-radius: 18px;
+      border-radius:18px;
       border:1px solid var(--border);
       background: rgba(17,24,39,.95);
       box-shadow: var(--shadow);
@@ -182,15 +156,11 @@
     .cartList{display:flex; flex-direction:column; gap:10px; margin:0; padding:0; list-style:none}
     .cartItem{
       display:flex; align-items:center; justify-content:space-between; gap:10px;
-      padding:10px 12px;
-      border:1px solid var(--border);
-      border-radius: 14px;
-      background: rgba(255,255,255,.03);
+      padding:10px 12px; border:1px solid var(--border);
+      border-radius:14px; background: rgba(255,255,255,.03);
     }
     .cartLeft{display:flex; flex-direction:column; gap:2px}
-    .qty{
-      display:inline-flex; align-items:center; gap:8px;
-    }
+    .qty{display:inline-flex; align-items:center; gap:8px}
     .qty button{
       width:28px; height:28px; border-radius:10px;
       border:1px solid var(--border);
@@ -200,69 +170,21 @@
     }
     .totalBox{
       margin-top:12px;
-      display:flex; align-items:center; justify-content:space-between;
-      padding:12px 12px;
-      border:1px solid rgba(34,197,94,.35);
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:12px 12px; border:1px solid rgba(34,197,94,.35);
       background: rgba(34,197,94,.10);
-      border-radius: 14px;
+      border-radius:14px;
     }
-    .empty{
-      color: var(--muted);
-      text-align:center;
-      padding:20px 0;
-    }
+    .empty{color:var(--muted); text-align:center; padding:20px 0}
 
-    /* Product detail */
-    .productDetail{
-      display:grid; grid-template-columns: 1fr 1fr; gap:20px;
-    }
-    .productImage{
-      height:400px; border-radius:16px;
-      background: linear-gradient(135deg, rgba(59,130,246,.3), rgba(34,197,94,.25));
-      display:flex; align-items:center; justify-content:center;
-      font-size:120px; border:1px solid var(--border);
-    }
-    .productInfo h3{margin:0 0 12px; font-size:24px}
-    .productSpecs{
-      display:flex; flex-direction:column; gap:8px; margin:16px 0;
-      padding:16px; background:rgba(255,255,255,.04); border-radius:12px; border:1px solid var(--border);
-    }
-    .specRow{
-      display:flex; justify-content:space-between; padding:6px 0;
-      border-bottom:1px solid var(--border);
-    }
-    .specRow:last-child{border-bottom:none}
-    .colorOptions, .storageOptions{
-      display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;
-    }
-    .colorOption, .storageOption{
-      padding:8px 14px; border:1px solid var(--border);
-      background:rgba(255,255,255,.04); border-radius:10px;
-      cursor:pointer; transition:.15s;
-    }
-    .colorOption:hover, .storageOption:hover{
-      background:rgba(255,255,255,.08);
-      border-color:var(--accent);
-    }
-    .colorOption.selected, .storageOption.selected{
-      background:rgba(34,197,94,.18);
-      border-color:rgba(34,197,94,.35);
-    }
-    textarea.input{
-      resize:vertical; font-family:inherit;
-    }
-
-    /* Responsive */
     @media (max-width: 980px){
       .card{grid-column: span 6;}
       .input{min-width: 180px}
-      .productDetail{grid-template-columns: 1fr;}
     }
     @media (max-width: 640px){
       .card{grid-column: span 12;}
       .controls{justify-content:stretch}
       .input, select{min-width: 100%}
-      .productImage{height:250px; font-size:80px;}
     }
   </style>
 </head>
@@ -274,19 +196,12 @@
       <div class="logo" aria-hidden="true"></div>
       <div>
         <div>iPhone Store</div>
-        <div class="small">витрина • корзина • демо</div>
+        <div class="small">каталог • корзина • демо</div>
       </div>
     </div>
 
     <div class="controls">
       <input id="q" class="input" placeholder="Поиск: 13, 14 Pro, 15…" />
-      <select id="priceFilter">
-        <option value="all">Цена: все</option>
-        <option value="0-600">Цена: до 600€</option>
-        <option value="600-800">Цена: 600-800€</option>
-        <option value="800-1000">Цена: 800-1000€</option>
-        <option value="1000+">Цена: от 1000€</option>
-      </select>
       <select id="sort">
         <option value="popular">Сортировка: популярные</option>
         <option value="priceAsc">Цена: по возрастанию</option>
@@ -304,27 +219,15 @@
   <main>
     <section class="hero">
       <h1>Интернет-магазин iPhone</h1>
-      <p>Добавляй товары в корзину, меняй количество, ищи и сортируй. Всё работает локально (LocalStorage).</p>
-      <div id="resultsCount" style="margin-top:12px; color:var(--muted); font-size:14px;"></div>
+      <p>Добавляй товары в корзину, меняй количество, ищи и сортируй. Данные корзины сохраняются в браузере.</p>
     </section>
 
     <section id="grid" class="grid" aria-live="polite"></section>
   </main>
 
   <footer>
-    © <span id="year"></span> iPhone Store. Демо-проект. Оплата/доставка/личный кабинет можно добавить.
+    © <span id="year"></span> iPhone Store. Демо-проект.
   </footer>
-</div>
-
-<!-- Product detail modal -->
-<div id="productOverlay" class="overlay" role="dialog" aria-modal="true" aria-label="Детали товара">
-  <div class="modal" style="max-width:900px;">
-    <div class="modalHead">
-      <h2 id="productModalTitle">Детали товара</h2>
-      <button id="closeProduct" class="btn icon" type="button" aria-label="Закрыть">✕</button>
-    </div>
-    <div class="modalBody" id="productModalBody"></div>
-  </div>
 </div>
 
 <!-- Cart modal -->
@@ -332,7 +235,7 @@
   <div class="modal">
     <div class="modalHead">
       <h2>Корзина</h2>
-      <button id="closeCart" class="btn icon" type="button" aria-label="Закрыть">✕</button>
+      <button id="closeCart" class="btn" type="button" aria-label="Закрыть">✕</button>
     </div>
     <div class="modalBody">
       <ul id="cartList" class="cartList"></ul>
@@ -343,125 +246,30 @@
           <div><strong>Итого</strong></div>
           <div class="small">Сумма товаров в корзине</div>
         </div>
-        <div>
+        <div style="text-align:right;">
           <div id="total" class="price">0 €</div>
-          <button id="checkout" class="btn primary" type="button">Оформить заказ</button>
+          <button id="checkout" class="btn primary" type="button" style="margin-top:8px;">Оформить заказ</button>
         </div>
       </div>
-      <div class="small" style="margin-top:10px; color:var(--muted);">
-        * Кнопка «Оформить заказ» в демо показывает итог и очищает корзину.
-      </div>
-    </div>
-  </div>
-</div>
 
-<!-- Order form modal -->
-<div id="orderOverlay" class="overlay" role="dialog" aria-modal="true" aria-label="Оформление заказа">
-  <div class="modal" style="max-width:600px;">
-    <div class="modalHead">
-      <h2>Оформление заказа</h2>
-      <button id="closeOrder" class="btn icon" type="button" aria-label="Закрыть">✕</button>
-    </div>
-    <div class="modalBody">
-      <form id="orderForm" style="display:flex; flex-direction:column; gap:14px;">
-        <div>
-          <label style="display:block; margin-bottom:6px; font-size:13px; color:var(--muted);">Имя *</label>
-          <input type="text" name="name" required class="input" placeholder="Ваше имя" />
-        </div>
-        <div>
-          <label style="display:block; margin-bottom:6px; font-size:13px; color:var(--muted);">Телефон *</label>
-          <input type="tel" name="phone" required class="input" placeholder="+7 (999) 123-45-67" />
-        </div>
-        <div>
-          <label style="display:block; margin-bottom:6px; font-size:13px; color:var(--muted);">Email *</label>
-          <input type="email" name="email" required class="input" placeholder="email@example.com" />
-        </div>
-        <div>
-          <label style="display:block; margin-bottom:6px; font-size:13px; color:var(--muted);">Адрес доставки *</label>
-          <textarea name="address" required class="input" rows="3" placeholder="Город, улица, дом, квартира"></textarea>
-        </div>
-        <div>
-          <label style="display:block; margin-bottom:6px; font-size:13px; color:var(--muted);">Комментарий</label>
-          <textarea name="comment" class="input" rows="2" placeholder="Дополнительная информация (необязательно)"></textarea>
-        </div>
-        <div style="padding:12px; background:rgba(255,255,255,.04); border-radius:12px; border:1px solid var(--border);">
-          <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-            <span>Товаров:</span>
-            <strong id="orderItemsCount">0</strong>
-          </div>
-          <div style="display:flex; justify-content:space-between; font-size:18px;">
-            <strong>К оплате:</strong>
-            <strong class="price" id="orderTotal">0 €</strong>
-          </div>
-        </div>
-        <button type="submit" class="btn primary" style="width:100%; justify-content:center; margin-top:8px;">
-          Подтвердить заказ
-        </button>
-        <div class="small" style="text-align:center; color:var(--muted);">
-          Это демо-версия. Реальная оплата не производится.
-        </div>
-      </form>
+      <div class="small" style="margin-top:10px;">
+        * «Оформить заказ» в демо показывает итог и очищает корзину.
+      </div>
     </div>
   </div>
 </div>
 
 <script>
-  // ===== Demo catalog =====
   const products = [
-    { 
-      id:"iphone15", name:"iPhone 15", desc:"6.1″, Dynamic Island, USB-C", 
-      price:799, tag:"Новинка", 
-      storage:["128GB", "256GB", "512GB"], colors:["Чёрный", "Синий", "Розовый", "Жёлтый"],
-      screen:"6.1″ Super Retina XDR", chip:"A16 Bionic", camera:"48 Мп основная",
-      battery:"До 20 часов видео", weight:"171 г", fullDesc:"iPhone 15 с Dynamic Island, USB-C и улучшенной камерой 48 Мп. Новый дизайн с закруглёнными краями."
-    },
-    { 
-      id:"iphone15p", name:"iPhone 15 Pro", desc:"Титановый корпус, A17 Pro", 
-      price:999, tag:"Pro",
-      storage:["128GB", "256GB", "512GB", "1TB"], colors:["Титан", "Синий титан", "Белый титан", "Чёрный титан"],
-      screen:"6.1″ Super Retina XDR ProMotion", chip:"A17 Pro", camera:"48 Мп Pro система",
-      battery:"До 23 часов видео", weight:"187 г", fullDesc:"iPhone 15 Pro с титановым корпусом, чипом A17 Pro и профессиональной системой камер. Action Button и USB-C."
-    },
-    { 
-      id:"iphone15pm", name:"iPhone 15 Pro Max", desc:"Максимальный размер, A17 Pro", 
-      price:1199, tag:"Pro Max",
-      storage:["256GB", "512GB", "1TB"], colors:["Титан", "Синий титан", "Белый титан", "Чёрный титан"],
-      screen:"6.7″ Super Retina XDR ProMotion", chip:"A17 Pro", camera:"48 Мп Pro система с 5x зумом",
-      battery:"До 29 часов видео", weight:"221 г", fullDesc:"iPhone 15 Pro Max — самый большой и мощный iPhone с 5x телеобъективом и максимальной производительностью."
-    },
-    { 
-      id:"iphone14", name:"iPhone 14", desc:"Отличный баланс цены/качества", 
-      price:699, tag:"Хит",
-      storage:["128GB", "256GB", "512GB"], colors:["Чёрный", "Синий", "Фиолетовый", "Красный", "Белый"],
-      screen:"6.1″ Super Retina XDR", chip:"A15 Bionic", camera:"12 Мп основная",
-      battery:"До 20 часов видео", weight:"172 г", fullDesc:"iPhone 14 с чипом A15 Bionic, улучшенной камерой и защитой от падений. Отличное соотношение цены и качества."
-    },
-    { 
-      id:"iphone14p", name:"iPhone 14 Pro", desc:"ProMotion, камера Pro", 
-      price:899, tag:"Pro",
-      storage:["128GB", "256GB", "512GB", "1TB"], colors:["Тёмно-фиолетовый", "Золотой", "Серебристый", "Глубокий чёрный"],
-      screen:"6.1″ Super Retina XDR ProMotion", chip:"A16 Bionic", camera:"48 Мп Pro система",
-      battery:"До 23 часов видео", weight:"206 г", fullDesc:"iPhone 14 Pro с Dynamic Island, чипом A16 Bionic и профессиональной системой камер с 48 Мп сенсором."
-    },
-    { 
-      id:"iphone13", name:"iPhone 13", desc:"Надёжная классика", 
-      price:599, tag:"Выгодно",
-      storage:["128GB", "256GB", "512GB"], colors:["Розовый", "Синий", "Полночь", "Звёздный свет", "Красный"],
-      screen:"6.1″ Super Retina XDR", chip:"A15 Bionic", camera:"12 Мп основная",
-      battery:"До 19 часов видео", weight:"174 г", fullDesc:"iPhone 13 с чипом A15 Bionic, улучшенной камерой и увеличенной автономностью. Проверенная надёжность."
-    },
-    { 
-      id:"iphoneSE", name:"iPhone SE", desc:"Компактный, быстрый, доступный", 
-      price:499, tag:"Бюджет",
-      storage:["64GB", "128GB", "256GB"], colors:["Полночь", "Звёздный свет", "Красный"],
-      screen:"4.7″ Retina HD", chip:"A15 Bionic", camera:"12 Мп основная",
-      battery:"До 15 часов видео", weight:"144 г", fullDesc:"iPhone SE с чипом A15 Bionic в классическом дизайне. Компактный размер, мощная производительность."
-    },
+    { id:"iphone15",  name:"iPhone 15",      desc:"6.1″, Dynamic Island, USB-C", price:799,  tag:"Новинка" },
+    { id:"iphone15p", name:"iPhone 15 Pro",  desc:"Титановый корпус, A17 Pro",   price:999,  tag:"Pro" },
+    { id:"iphone14",  name:"iPhone 14",      desc:"Отличный баланс цены/качества", price:699, tag:"Хит" },
+    { id:"iphone14p", name:"iPhone 14 Pro",  desc:"ProMotion, камера Pro",       price:899,  tag:"Pro" },
+    { id:"iphone13",  name:"iPhone 13",      desc:"Надёжная классика",           price:599,  tag:"Выгодно" },
+    { id:"iphoneSE",  name:"iPhone SE",      desc:"Компактный, быстрый, доступный", price:499, tag:"Бюджет" },
   ];
 
-  // ===== State & storage =====
   const storageKey = "iphone_store_cart_v1";
-  /** @type {Record<string, number>} */
   let cart = loadCart();
 
   function loadCart(){
@@ -473,18 +281,11 @@
       return parsed;
     }catch{ return {}; }
   }
+  function saveCart(){ localStorage.setItem(storageKey, JSON.stringify(cart)); }
 
-  function saveCart(){
-    localStorage.setItem(storageKey, JSON.stringify(cart));
-  }
-
-  // ===== Helpers =====
   const eur = new Intl.NumberFormat("ru-RU", { style:"currency", currency:"EUR", maximumFractionDigits:0 });
 
-  function cartCount(){
-    return Object.values(cart).reduce((a,b)=>a+b,0);
-  }
-
+  function cartCount(){ return Object.values(cart).reduce((a,b)=>a+b,0); }
   function cartTotal(){
     let sum = 0;
     for(const [id, qty] of Object.entries(cart)){
@@ -493,13 +294,11 @@
     }
     return sum;
   }
-
   function addToCart(id){
     cart[id] = (cart[id] || 0) + 1;
     saveCart();
     renderCartBadge();
   }
-
   function changeQty(id, delta){
     const next = (cart[id] || 0) + delta;
     if(next <= 0) delete cart[id];
@@ -509,69 +308,32 @@
     renderCartBadge();
   }
 
-  // ===== Render catalog =====
   const grid = document.getElementById("grid");
   const qInput = document.getElementById("q");
   const sortSel = document.getElementById("sort");
-  const priceFilterSel = document.getElementById("priceFilter");
 
   function getFilteredSorted(){
     const q = (qInput.value || "").trim().toLowerCase();
-    let list = products.filter(p =>
-      p.name.toLowerCase().includes(q) ||
-      p.desc.toLowerCase().includes(q)
-    );
-
-    // Price filter
-    const priceFilter = priceFilterSel.value;
-    if(priceFilter !== "all"){
-      const [min, max] = priceFilter.split("-").map(x => x === "" ? null : parseInt(x));
-      list = list.filter(p => {
-        if(priceFilter === "1000+") return p.price >= 1000;
-        if(min === null) return p.price <= max;
-        if(max === null) return p.price >= min;
-        return p.price >= min && p.price <= max;
-      });
-    }
-
+    let list = products.filter(p => p.name.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q));
     switch(sortSel.value){
       case "priceAsc": list.sort((a,b)=>a.price-b.price); break;
       case "priceDesc": list.sort((a,b)=>b.price-a.price); break;
       case "nameAsc": list.sort((a,b)=>a.name.localeCompare(b.name, "ru")); break;
-      default: /* popular */ break;
+      default: break;
     }
     return list;
   }
 
-  const resultsCountEl = document.getElementById("resultsCount");
-  
+  function escapeHtml(s){
+    return String(s).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+  }
+
   function renderCatalog(){
     const list = getFilteredSorted();
-    const emojiMap = {
-      "iphone15": "📱",
-      "iphone15p": "📱✨",
-      "iphone15pm": "📱💎",
-      "iphone14": "📱",
-      "iphone14p": "📱⭐",
-      "iphone13": "📱",
-      "iphoneSE": "📱"
-    };
-    
-    // Update results count
-    const count = list.length;
-    const total = products.length;
-    if(count === total){
-      resultsCountEl.textContent = `Найдено товаров: ${count}`;
-    } else {
-      resultsCountEl.textContent = `Найдено товаров: ${count} из ${total}`;
-    }
-    
     grid.innerHTML = list.map(p => `
       <article class="card">
-        <div class="img">
-          <div style="font-size:64px; line-height:1;">${emojiMap[p.id] || "📱"}</div>
-          <span class="tag" style="position:absolute; top:12px; left:12px;">${escapeHtml(p.tag)}</span>
-        </div>
+        <div class="img"><span class="tag">${escapeHtml(p.tag)}</span></div>
         <div class="content">
           <div class="title">${escapeHtml(p.name)}</div>
           <div class="muted">${escapeHtml(p.desc)}</div>
@@ -584,38 +346,17 @@
           <div class="actions">
             <button class="btn primary" type="button" data-add="${p.id}">➕ В корзину</button>
             <button class="btn" type="button" data-buy="${p.id}">⚡ Купить</button>
-            <button class="btn" type="button" data-detail="${p.id}">ℹ️ Подробнее</button>
           </div>
         </div>
       </article>
     `).join("");
 
-    grid.querySelectorAll("[data-add]").forEach(btn=>{
-      btn.addEventListener("click", ()=> addToCart(btn.dataset.add));
-    });
-
-    grid.querySelectorAll("[data-buy]").forEach(btn=>{
-      btn.addEventListener("click", ()=>{
-        addToCart(btn.dataset.buy);
-        openCart();
-      });
-    });
-
-    grid.querySelectorAll("[data-detail]").forEach(btn=>{
-      btn.addEventListener("click", ()=> openProductDetail(btn.dataset.detail));
-    });
+    grid.querySelectorAll("[data-add]").forEach(btn => btn.addEventListener("click", ()=> addToCart(btn.dataset.add)));
+    grid.querySelectorAll("[data-buy]").forEach(btn => btn.addEventListener("click", ()=>{
+      addToCart(btn.dataset.buy); openCart();
+    }));
   }
 
-  function escapeHtml(s){
-    return String(s)
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;")
-      .replaceAll("'","&#039;");
-  }
-
-  // ===== Cart modal =====
   const overlay = document.getElementById("overlay");
   const cartBtn = document.getElementById("cartBtn");
   const closeCartBtn = document.getElementById("closeCart");
@@ -625,17 +366,9 @@
   const cartCountEl = document.getElementById("cartCount");
   const checkoutBtn = document.getElementById("checkout");
 
-  function openCart(){
-    overlay.classList.add("open");
-    renderCart();
-  }
-  function closeCart(){
-    overlay.classList.remove("open");
-  }
-
-  function renderCartBadge(){
-    cartCountEl.textContent = String(cartCount());
-  }
+  function openCart(){ overlay.classList.add("open"); renderCart(); }
+  function closeCart(){ overlay.classList.remove("open"); }
+  function renderCartBadge(){ cartCountEl.textContent = String(cartCount()); }
 
   function renderCart(){
     const entries = Object.entries(cart);
@@ -661,7 +394,7 @@
             </div>
             <div style="min-width:120px; text-align:right;">
               <div class="price">${eur.format(p.price * qty)}</div>
-              <button class="btn" type="button" data-remove="${id}" style="margin-top:6px; border-color: rgba(239,68,68,.35); background: rgba(239,68,68,.10);">
+              <button class="btn" type="button" data-remove="${id}" style="margin-top:6px;">
                 🗑 Удалить
               </button>
             </div>
@@ -681,214 +414,27 @@
     totalEl.textContent = eur.format(cartTotal());
   }
 
-  // ===== Product detail modal =====
-  const productOverlay = document.getElementById("productOverlay");
-  const productModalTitle = document.getElementById("productModalTitle");
-  const productModalBody = document.getElementById("productModalBody");
-  const closeProductBtn = document.getElementById("closeProduct");
-  let selectedStorage = {};
-  let selectedColor = {};
-
-  function openProductDetail(id){
-    const p = products.find(x => x.id === id);
-    if(!p) return;
-    
-    selectedStorage[id] = p.storage?.[0] || "";
-    selectedColor[id] = p.colors?.[0] || "";
-    
-    productModalTitle.textContent = p.name;
-    productModalBody.innerHTML = `
-      <div class="productDetail">
-        <div>
-          <div class="productImage">📱</div>
-        </div>
-        <div class="productInfo">
-          <h3>${escapeHtml(p.name)}</h3>
-          <div class="price" style="font-size:28px; margin-bottom:16px;">${eur.format(p.price)}</div>
-          <div class="muted" style="margin-bottom:16px;">${escapeHtml(p.fullDesc || p.desc)}</div>
-          
-          ${p.storage ? `
-            <div style="margin-bottom:12px;">
-              <div style="margin-bottom:6px; font-size:13px; color:var(--muted);">Объём памяти:</div>
-              <div class="storageOptions">
-                ${p.storage.map(s => `
-                  <button type="button" class="storageOption ${selectedStorage[id] === s ? 'selected' : ''}" 
-                    data-storage="${s}" data-id="${id}">${s}</button>
-                `).join("")}
-              </div>
-            </div>
-          ` : ""}
-          
-          ${p.colors ? `
-            <div style="margin-bottom:12px;">
-              <div style="margin-bottom:6px; font-size:13px; color:var(--muted);">Цвет:</div>
-              <div class="colorOptions">
-                ${p.colors.map(c => `
-                  <button type="button" class="colorOption ${selectedColor[id] === c ? 'selected' : ''}" 
-                    data-color="${c}" data-id="${id}">${c}</button>
-                `).join("")}
-              </div>
-            </div>
-          ` : ""}
-          
-          <div class="productSpecs">
-            <div class="specRow">
-              <span class="muted">Экран:</span>
-              <strong>${escapeHtml(p.screen || "—")}</strong>
-            </div>
-            <div class="specRow">
-              <span class="muted">Чип:</span>
-              <strong>${escapeHtml(p.chip || "—")}</strong>
-            </div>
-            <div class="specRow">
-              <span class="muted">Камера:</span>
-              <strong>${escapeHtml(p.camera || "—")}</strong>
-            </div>
-            <div class="specRow">
-              <span class="muted">Батарея:</span>
-              <strong>${escapeHtml(p.battery || "—")}</strong>
-            </div>
-            <div class="specRow">
-              <span class="muted">Вес:</span>
-              <strong>${escapeHtml(p.weight || "—")}</strong>
-            </div>
-          </div>
-          
-          <div style="display:flex; gap:10px; margin-top:20px;">
-            <button class="btn primary" type="button" data-add-detail="${id}" style="flex:1;">
-              ➕ Добавить в корзину
-            </button>
-            <button class="btn" type="button" data-buy-detail="${id}" style="flex:1;">
-              ⚡ Купить сейчас
-            </button>
-          </div>
-        </div>
-      </div>
-    `;
-    
-    // Storage selection
-    productModalBody.querySelectorAll(".storageOption").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const id = btn.dataset.id;
-        productModalBody.querySelectorAll(`.storageOption[data-id="${id}"]`).forEach(b => b.classList.remove("selected"));
-        btn.classList.add("selected");
-        selectedStorage[id] = btn.dataset.storage;
-      });
-    });
-    
-    // Color selection
-    productModalBody.querySelectorAll(".colorOption").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const id = btn.dataset.id;
-        productModalBody.querySelectorAll(`.colorOption[data-id="${id}"]`).forEach(b => b.classList.remove("selected"));
-        btn.classList.add("selected");
-        selectedColor[id] = btn.dataset.color;
-      });
-    });
-    
-    // Add to cart from detail
-    productModalBody.querySelectorAll("[data-add-detail]").forEach(btn => {
-      btn.addEventListener("click", () => {
-        addToCart(btn.dataset.addDetail);
-        alert(`Добавлено в корзину: ${p.name} (${selectedStorage[p.id] || ""} ${selectedColor[p.id] || ""})`);
-      });
-    });
-    
-    // Buy from detail
-    productModalBody.querySelectorAll("[data-buy-detail]").forEach(btn => {
-      btn.addEventListener("click", () => {
-        addToCart(btn.dataset.buyDetail);
-        closeProductDetail();
-        openCart();
-      });
-    });
-    
-    productOverlay.classList.add("open");
-  }
-  
-  function closeProductDetail(){
-    productOverlay.classList.remove("open");
-  }
-
-  // ===== Order form =====
-  const orderOverlay = document.getElementById("orderOverlay");
-  const orderForm = document.getElementById("orderForm");
-  const closeOrderBtn = document.getElementById("closeOrder");
-  const orderItemsCount = document.getElementById("orderItemsCount");
-  const orderTotal = document.getElementById("orderTotal");
-
-  function openOrderForm(){
-    const count = cartCount();
-    const total = cartTotal();
-    if(count === 0){
-      alert("Корзина пустая 🙂");
-      return;
-    }
-    orderItemsCount.textContent = String(count);
-    orderTotal.textContent = eur.format(total);
-    orderOverlay.classList.add("open");
-  }
-
-  function closeOrderForm(){
-    orderOverlay.classList.remove("open");
-  }
-
-  // ===== Events =====
   cartBtn.addEventListener("click", openCart);
   closeCartBtn.addEventListener("click", closeCart);
-  overlay.addEventListener("click", (e)=>{
-    if(e.target === overlay) closeCart();
-  });
-  
-  closeProductBtn.addEventListener("click", closeProductDetail);
-  productOverlay.addEventListener("click", (e)=>{
-    if(e.target === productOverlay) closeProductDetail();
-  });
-  
-  closeOrderBtn.addEventListener("click", closeOrderForm);
-  orderOverlay.addEventListener("click", (e)=>{
-    if(e.target === orderOverlay) closeOrderForm();
-  });
-  
-  window.addEventListener("keydown", (e)=>{
-    if(e.key === "Escape"){
-      closeCart();
-      closeProductDetail();
-      closeOrderForm();
-    }
-  });
+  overlay.addEventListener("click", (e)=>{ if(e.target === overlay) closeCart(); });
+  window.addEventListener("keydown", (e)=>{ if(e.key === "Escape") closeCart(); });
 
   qInput.addEventListener("input", renderCatalog);
   sortSel.addEventListener("change", renderCatalog);
-  priceFilterSel.addEventListener("change", renderCatalog);
 
   checkoutBtn.addEventListener("click", ()=>{
-    closeCart();
-    openOrderForm();
-  });
-
-  orderForm.addEventListener("submit", (e)=>{
-    e.preventDefault();
-    const formData = new FormData(orderForm);
-    const data = Object.fromEntries(formData);
-    const total = cartTotal();
-    
-    console.log("Order data:", data);
-    console.log("Total:", total);
-    
-    alert(`Заказ оформлен! (демо)\n\nИмя: ${data.name}\nТелефон: ${data.phone}\nEmail: ${data.email}\nАдрес: ${data.address}\n\nСумма: ${eur.format(total)}\n\nСпасибо за заказ!`);
-    
+    const sum = cartTotal();
+    if(sum <= 0){ alert("Корзина пустая 🙂"); return; }
+    alert("Заказ оформлен (демо). Сумма: " + eur.format(sum));
     cart = {};
     saveCart();
     renderCart();
     renderCartBadge();
-    closeOrderForm();
-    orderForm.reset();
+    closeCart();
   });
 
   document.getElementById("year").textContent = new Date().getFullYear();
 
-  // Initial render
   renderCatalog();
   renderCartBadge();
 </script>
