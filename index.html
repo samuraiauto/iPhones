@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>iPhone Store — интернет-магазин</title>
+  <style>
+    :root{
+      --bg:#0b0f16;
+      --card:#111827;
+      --muted:#94a3b8;
+      --text:#e5e7eb;
+      --accent:#22c55e;
+      --danger:#ef4444;
+      --border:rgba(255,255,255,.08);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius:16px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 20% -10%, rgba(34,197,94,.18), transparent 60%),
+                  radial-gradient(900px 500px at 110% 10%, rgba(59,130,246,.16), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+    }
+    a{color:inherit}
+    .container{max-width:1100px; margin:0 auto; padding:20px}
+    header{
+      position: sticky; top:0; z-index:10;
+      backdrop-filter: blur(12px);
+      background: rgba(11,15,22,.65);
+      border-bottom: 1px solid var(--border);
+    }
+    .topbar{
+      display:flex; gap:12px; align-items:center; justify-content:space-between;
+      padding:14px 20px;
+      max-width:1100px; margin:0 auto;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.2px;
+    }
+    .logo{
+      width:38px; height:38px; border-radius:12px;
+      background: linear-gradient(135deg, rgba(34,197,94,.9), rgba(59,130,246,.9));
+      box-shadow: var(--shadow);
+    }
+    .controls{
+      display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end;
+    }
+    .input, select{
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding:10px 12px;
+      border-radius: 12px;
+      outline: none;
+      min-width: 220px;
+    }
+    select{min-width: 210px}
+    .btn{
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      padding:10px 12px;
+      border-radius: 12px;
+      cursor:pointer;
+      transition:.15s transform, .15s background;
+      display:inline-flex; align-items:center; gap:8px;
+      user-select:none;
+    }
+    .btn:hover{background: rgba(255,255,255,.09)}
+    .btn:active{transform: translateY(1px)}
+    .btn.primary{
+      background: rgba(34,197,94,.18);
+      border-color: rgba(34,197,94,.35);
+    }
+    .badge{
+      background: rgba(255,255,255,.10);
+      border:1px solid var(--border);
+      padding:2px 8px;
+      border-radius:999px;
+      font-size:12px;
+      color: var(--text);
+    }
+
+    main{padding:22px 0 60px}
+    .hero{
+      padding: 22px 20px;
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      box-shadow: var(--shadow);
+    }
+    .hero h1{margin:0 0 6px; font-size:26px}
+    .hero p{margin:0; color:var(--muted)}
+    .grid{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:14px;
+    }
+    .card{
+      grid-column: span 4;
+      background: rgba(255,255,255,.04);
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      overflow:hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,.25);
+      display:flex; flex-direction:column;
+    }
+    .img{
+      height:170px;
+      background:
+        radial-gradient(80% 80% at 30% 20%, rgba(255,255,255,.18), transparent 55%),
+        linear-gradient(135deg, rgba(59,130,246,.25), rgba(34,197,94,.22)),
+        rgba(255,255,255,.04);
+      border-bottom:1px solid var(--border);
+      display:flex; align-items:flex-end; justify-content:flex-start;
+      padding:12px;
+    }
+    .tag{
+      font-size:12px;
+      padding:4px 10px;
+      border-radius:999px;
+      background: rgba(0,0,0,.25);
+      border:1px solid var(--border);
+      color: var(--text);
+    }
+    .content{padding:14px 14px 12px; display:flex; flex-direction:column; gap:10px; flex:1}
+    .title{font-weight:800; font-size:16px; line-height:1.25}
+    .muted{color:var(--muted); font-size:13px; line-height:1.35}
+    .row{display:flex; align-items:center; justify-content:space-between; gap:10px}
+    .price{font-weight:900; font-size:18px}
+    .small{font-size:12px; color:var(--muted)}
+    .actions{display:flex; gap:10px; margin-top:auto}
+    .btn.icon{min-width:44px; justify-content:center}
+
+    footer{
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      padding: 18px 0 30px;
+      font-size: 13px;
+    }
+
+    /* Modal */
+    .overlay{
+      position:fixed; inset:0; background: rgba(0,0,0,.55);
+      display:none; align-items:center; justify-content:center;
+      padding:20px;
+    }
+    .overlay.open{display:flex}
+    .modal{
+      width:min(760px, 100%);
+      border-radius: 18px;
+      border:1px solid var(--border);
+      background: rgba(17,24,39,.95);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .modalHead{
+      padding:14px 16px;
+      display:flex; align-items:center; justify-content:space-between;
+      border-bottom:1px solid var(--border);
+    }
+    .modalHead h2{margin:0; font-size:16px}
+    .modalBody{padding:14px 16px}
+    .cartList{display:flex; flex-direction:column; gap:10px; margin:0; padding:0; list-style:none}
+    .cartItem{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      padding:10px 12px;
+      border:1px solid var(--border);
+      border-radius: 14px;
+      background: rgba(255,255,255,.03);
+    }
+    .cartLeft{display:flex; flex-direction:column; gap:2px}
+    .qty{
+      display:inline-flex; align-items:center; gap:8px;
+    }
+    .qty button{
+      width:28px; height:28px; border-radius:10px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      cursor:pointer;
+    }
+    .totalBox{
+      margin-top:12px;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:12px 12px;
+      border:1px solid rgba(34,197,94,.35);
+      background: rgba(34,197,94,.10);
+      border-radius: 14px;
+    }
+    .empty{
+      color: var(--muted);
+      text-align:center;
+      padding:20px 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .card{grid-column: span 6;}
+      .input{min-width: 180px}
+    }
+    @media (max-width: 640px){
+      .card{grid-column: span 12;}
+      .controls{justify-content:stretch}
+      .input, select{min-width: 100%}
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <div>
+        <div>iPhone Store</div>
+        <div class="small">витрина • корзина • демо</div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <input id="q" class="input" placeholder="Поиск: 13, 14 Pro, 15…" />
+      <select id="sort">
+        <option value="popular">Сортировка: популярные</option>
+        <option value="priceAsc">Цена: по возрастанию</option>
+        <option value="priceDesc">Цена: по убыванию</option>
+        <option value="nameAsc">Название: A → Я</option>
+      </select>
+      <button id="cartBtn" class="btn primary" type="button">
+        🛒 Корзина <span id="cartCount" class="badge">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <main>
+    <section class="hero">
+      <h1>Интернет-магазин iPhone</h1>
+      <p>Добавляй товары в корзину, меняй количество, ищи и сортируй. Всё работает локально (LocalStorage).</p>
+    </section>
+
+    <section id="grid" class="grid" aria-live="polite"></section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> iPhone Store. Демо-проект. Оплата/доставка/личный кабинет можно добавить.
+  </footer>
+</div>
+
+<!-- Cart modal -->
+<div id="overlay" class="overlay" role="dialog" aria-modal="true" aria-label="Корзина">
+  <div class="modal">
+    <div class="modalHead">
+      <h2>Корзина</h2>
+      <button id="closeCart" class="btn icon" type="button" aria-label="Закрыть">✕</button>
+    </div>
+    <div class="modalBody">
+      <ul id="cartList" class="cartList"></ul>
+      <div id="empty" class="empty" style="display:none;">Корзина пустая. Добавь iPhone из каталога 🙂</div>
+
+      <div class="totalBox">
+        <div>
+          <div><strong>Итого</strong></div>
+          <div class="small">Сумма товаров в корзине</div>
+        </div>
+        <div>
+          <div id="total" class="price">0 €</div>
+          <button id="checkout" class="btn primary" type="button">Оформить заказ</button>
+        </div>
+      </div>
+      <div class="small" style="margin-top:10px; color:var(--muted);">
+        * Кнопка «Оформить заказ» в демо показывает итог и очищает корзину.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ===== Demo catalog =====
+  const products = [
+    { id:"iphone15",  name:"iPhone 15",      desc:"6.1″, Dynamic Island, USB-C", price:799,  tag:"Новинка" },
+    { id:"iphone15p", name:"iPhone 15 Pro",  desc:"Титановый корпус, A17 Pro",   price:999,  tag:"Pro" },
+    { id:"iphone14",  name:"iPhone 14",      desc:"Отличный баланс цены/качества", price:699, tag:"Хит" },
+    { id:"iphone14p", name:"iPhone 14 Pro",  desc:"ProMotion, камера Pro",       price:899,  tag:"Pro" },
+    { id:"iphone13",  name:"iPhone 13",      desc:"Надёжная классика",           price:599,  tag:"Выгодно" },
+    { id:"iphoneSE",  name:"iPhone SE",      desc:"Компактный, быстрый, доступный", price:499, tag:"Бюджет" },
+  ];
+
+  // ===== State & storage =====
+  const storageKey = "iphone_store_cart_v1";
+  /** @type {Record<string, number>} */
+  let cart = loadCart();
+
+  function loadCart(){
+    try{
+      const raw = localStorage.getItem(storageKey);
+      if(!raw) return {};
+      const parsed = JSON.parse(raw);
+      if(typeof parsed !== "object" || !parsed) return {};
+      return parsed;
+    }catch{ return {}; }
+  }
+
+  function saveCart(){
+    localStorage.setItem(storageKey, JSON.stringify(cart));
+  }
+
+  // ===== Helpers =====
+  const eur = new Intl.NumberFormat("ru-RU", { style:"currency", currency:"EUR", maximumFractionDigits:0 });
+
+  function cartCount(){
+    return Object.values(cart).reduce((a,b)=>a+b,0);
+  }
+
+  function cartTotal(){
+    let sum = 0;
+    for(const [id, qty] of Object.entries(cart)){
+      const p = products.find(x => x.id === id);
+      if(p) sum += p.price * qty;
+    }
+    return sum;
+  }
+
+  function addToCart(id){
+    cart[id] = (cart[id] || 0) + 1;
+    saveCart();
+    renderCartBadge();
+  }
+
+  function changeQty(id, delta){
+    const next = (cart[id] || 0) + delta;
+    if(next <= 0) delete cart[id];
+    else cart[id] = next;
+    saveCart();
+    renderCart();
+    renderCartBadge();
+  }
+
+  // ===== Render catalog =====
+  const grid = document.getElementById("grid");
+  const qInput = document.getElementById("q");
+  const sortSel = document.getElementById("sort");
+
+  function getFilteredSorted(){
+    const q = (qInput.value || "").trim().toLowerCase();
+    let list = products.filter(p =>
+      p.name.toLowerCase().includes(q) ||
+      p.desc.toLowerCase().includes(q)
+    );
+
+    switch(sortSel.value){
+      case "priceAsc": list.sort((a,b)=>a.price-b.price); break;
+      case "priceDesc": list.sort((a,b)=>b.price-a.price); break;
+      case "nameAsc": list.sort((a,b)=>a.name.localeCompare(b.name, "ru")); break;
+      default: /* popular */ break;
+    }
+    return list;
+  }
+
+  function renderCatalog(){
+    const list = getFilteredSorted();
+    grid.innerHTML = list.map(p => `
+      <article class="card">
+        <div class="img">
+          <span class="tag">${escapeHtml(p.tag)}</span>
+        </div>
+        <div class="content">
+          <div class="title">${escapeHtml(p.name)}</div>
+          <div class="muted">${escapeHtml(p.desc)}</div>
+          <div class="row">
+            <div>
+              <div class="price">${eur.format(p.price)}</div>
+              <div class="small">В наличии • Доставка 1–3 дня</div>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn primary" type="button" data-add="${p.id}">➕ В корзину</button>
+            <button class="btn" type="button" data-buy="${p.id}">⚡ Купить</button>
+          </div>
+        </div>
+      </article>
+    `).join("");
+
+    grid.querySelectorAll("[data-add]").forEach(btn=>{
+      btn.addEventListener("click", ()=> addToCart(btn.dataset.add));
+    });
+
+    grid.querySelectorAll("[data-buy]").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        addToCart(btn.dataset.buy);
+        openCart();
+      });
+    });
+  }
+
+  function escapeHtml(s){
+    return String(s)
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  // ===== Cart modal =====
+  const overlay = document.getElementById("overlay");
+  const cartBtn = document.getElementById("cartBtn");
+  const closeCartBtn = document.getElementById("closeCart");
+  const cartList = document.getElementById("cartList");
+  const empty = document.getElementById("empty");
+  const totalEl = document.getElementById("total");
+  const cartCountEl = document.getElementById("cartCount");
+  const checkoutBtn = document.getElementById("checkout");
+
+  function openCart(){
+    overlay.classList.add("open");
+    renderCart();
+  }
+  function closeCart(){
+    overlay.classList.remove("open");
+  }
+
+  function renderCartBadge(){
+    cartCountEl.textContent = String(cartCount());
+  }
+
+  function renderCart(){
+    const entries = Object.entries(cart);
+    if(entries.length === 0){
+      cartList.innerHTML = "";
+      empty.style.display = "block";
+    }else{
+      empty.style.display = "none";
+      cartList.innerHTML = entries.map(([id, qty])=>{
+        const p = products.find(x => x.id === id);
+        if(!p) return "";
+        return `
+          <li class="cartItem">
+            <div class="cartLeft">
+              <div><strong>${escapeHtml(p.name)}</strong></div>
+              <div class="small">${escapeHtml(p.desc)}</div>
+              <div class="small">${eur.format(p.price)} за шт.</div>
+            </div>
+            <div class="qty">
+              <button type="button" data-dec="${id}" aria-label="Уменьшить">−</button>
+              <div><strong>${qty}</strong></div>
+              <button type="button" data-inc="${id}" aria-label="Увеличить">+</button>
+            </div>
+            <div style="min-width:120px; text-align:right;">
+              <div class="price">${eur.format(p.price * qty)}</div>
+              <button class="btn" type="button" data-remove="${id}" style="margin-top:6px; border-color: rgba(239,68,68,.35); background: rgba(239,68,68,.10);">
+                🗑 Удалить
+              </button>
+            </div>
+          </li>
+        `;
+      }).join("");
+
+      cartList.querySelectorAll("[data-inc]").forEach(b=> b.addEventListener("click", ()=> changeQty(b.dataset.inc, +1)));
+      cartList.querySelectorAll("[data-dec]").forEach(b=> b.addEventListener("click", ()=> changeQty(b.dataset.dec, -1)));
+      cartList.querySelectorAll("[data-remove]").forEach(b=> b.addEventListener("click", ()=>{
+        delete cart[b.dataset.remove];
+        saveCart();
+        renderCart();
+        renderCartBadge();
+      }));
+    }
+    totalEl.textContent = eur.format(cartTotal());
+  }
+
+  // ===== Events =====
+  cartBtn.addEventListener("click", openCart);
+  closeCartBtn.addEventListener("click", closeCart);
+  overlay.addEventListener("click", (e)=>{
+    if(e.target === overlay) closeCart();
+  });
+  window.addEventListener("keydown", (e)=>{
+    if(e.key === "Escape") closeCart();
+  });
+
+  qInput.addEventListener("input", renderCatalog);
+  sortSel.addEventListener("change", renderCatalog);
+
+  checkoutBtn.addEventListener("click", ()=>{
+    const sum = cartTotal();
+    if(sum <= 0){
+      alert("Корзина пустая 🙂");
+      return;
+    }
+    alert("Заказ оформлен (демо). Сумма: " + eur.format(sum));
+    cart = {};
+    saveCart();
+    renderCart();
+    renderCartBadge();
+    closeCart();
+  });
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  // Initial render
+  renderCatalog();
+  renderCartBadge();
+</script>
+
+</body>
+</html>
